@@ -1,0 +1,859 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Will you be mine, forever? 🤍</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            overflow-y: scroll;
+            overflow-x: hidden;
+        }
+
+        body {
+            font-family: 'Georgia', 'Times New Roman', serif;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #fff5f5 0%, #ffe8eb 30%, #fff0f3 60%, #fef7f8 100%);
+            background-attachment: fixed;
+            position: relative;
+            padding: 40px 20px;
+        }
+
+        /* Soft romantic overlay */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background:
+                radial-gradient(circle at 25% 35%, rgba(255, 182, 193, 0.12) 0%, transparent 55%),
+                radial-gradient(circle at 75% 65%, rgba(255, 218, 224, 0.15) 0%, transparent 55%);
+            pointer-events: none;
+            animation: gentleGlow 10s ease-in-out infinite;
+            z-index: 0;
+        }
+
+        @keyframes gentleGlow {
+
+            0%,
+            100% {
+                opacity: 0.5;
+            }
+
+            50% {
+                opacity: 0.8;
+            }
+        }
+
+        /* Music toggle */
+        .music-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.75);
+            border: 1px solid rgba(255, 182, 193, 0.25);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            transition: all 0.4s ease;
+            z-index: 1000;
+            backdrop-filter: blur(8px);
+            box-shadow: 0 4px 12px rgba(255, 182, 193, 0.15);
+        }
+
+        .music-toggle:hover {
+            background: rgba(255, 255, 255, 0.95);
+            transform: scale(1.06);
+            box-shadow: 0 6px 18px rgba(255, 182, 193, 0.25);
+        }
+
+        /* Petals */
+        .petals {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+            overflow: hidden;
+        }
+
+        .petal {
+            position: absolute;
+            top: -30px;
+            font-size: 16px;
+            opacity: 0.45;
+            animation: fallGentle linear infinite;
+        }
+
+        @keyframes fallGentle {
+            to {
+                transform: translateY(105vh) rotate(200deg);
+                opacity: 0;
+            }
+        }
+
+        /* Floating hearts */
+        .hearts-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+            overflow: hidden;
+        }
+
+        .heart-float {
+            position: absolute;
+            font-size: 22px;
+            opacity: 0.12;
+            animation: riseGentle 14s ease-in infinite;
+        }
+
+        @keyframes riseGentle {
+            0% {
+                transform: translateY(105vh) scale(0.75);
+                opacity: 0;
+            }
+
+            15% {
+                opacity: 0.12;
+            }
+
+            85% {
+                opacity: 0.12;
+            }
+
+            100% {
+                transform: translateY(-80px) scale(1);
+                opacity: 0;
+            }
+        }
+
+        /* Main wrapper */
+        .main-wrapper {
+            position: relative;
+            z-index: 10;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: calc(100vh - 80px);
+        }
+
+        /* Proposal container */
+        .proposal-container {
+            text-align: center;
+            padding: 80px 60px;
+            background: rgba(255, 255, 255, 0.65);
+            backdrop-filter: blur(18px);
+            border-radius: 40px;
+            border: 1px solid rgba(255, 182, 193, 0.22);
+            box-shadow: 0 30px 80px rgba(255, 182, 193, 0.18);
+            max-width: 700px;
+            width: 100%;
+            margin: 0 auto;
+            position: relative;
+            opacity: 0;
+            animation: fadeInUp 1.5s ease-out forwards;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Decorative corner hearts */
+        .corner-heart {
+            position: absolute;
+            font-size: 32px;
+            opacity: 0.25;
+            animation: slowPulse 5s ease-in-out infinite;
+        }
+
+        .corner-heart.tl {
+            top: -12px;
+            left: -12px;
+        }
+
+        .corner-heart.tr {
+            top: -12px;
+            right: -12px;
+            animation-delay: 1.2s;
+        }
+
+        .corner-heart.bl {
+            bottom: -12px;
+            left: -12px;
+            animation-delay: 2.4s;
+        }
+
+        .corner-heart.br {
+            bottom: -12px;
+            right: -12px;
+            animation-delay: 3.6s;
+        }
+
+        @keyframes slowPulse {
+
+            0%,
+            100% {
+                transform: scale(1);
+                opacity: 0.25;
+            }
+
+            50% {
+                transform: scale(1.12);
+                opacity: 0.35;
+            }
+        }
+
+        /* Propose day label */
+        .propose-label {
+            font-size: 1rem;
+            color: #c27d8c;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 25px;
+            font-weight: 400;
+            animation: fadeIn 2s ease-out 0.5s forwards;
+            opacity: 0;
+        }
+
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+            }
+        }
+
+        /* Main proposal text with typing effect */
+        .proposal-text {
+            font-size: 1.4rem;
+            color: #9d6b74;
+            line-height: 1.9;
+            margin-bottom: 15px;
+            animation: fadeIn 2s ease-out 1s forwards;
+            opacity: 0;
+        }
+
+        /* Main question */
+        .proposal-question {
+            font-size: 2.6rem;
+            color: #8b4854;
+            font-weight: 300;
+            line-height: 1.6;
+            margin: 30px 0;
+            text-shadow: 0 0 25px rgba(255, 182, 193, 0.3);
+            animation: fadeIn 2s ease-out 1.5s forwards, heartbeatSlow 3s ease-in-out 3.5s infinite;
+            opacity: 0;
+        }
+
+        @keyframes heartbeatSlow {
+
+            0%,
+            100% {
+                transform: scale(1);
+            }
+
+            7%,
+            21% {
+                transform: scale(1.04);
+            }
+
+            14%,
+            28% {
+                transform: scale(1);
+            }
+        }
+
+        /* Heart icon */
+        .heart-icon {
+            font-size: 3.5rem;
+            display: inline-block;
+            margin: 25px 0;
+            animation: fadeIn 2s ease-out 2s forwards, slowPulse 4s ease-in-out 4s infinite;
+            opacity: 0;
+        }
+
+        /* Buttons container */
+        .buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 22px;
+            align-items: center;
+            margin-top: 50px;
+            position: relative;
+            min-height: 170px;
+            animation: fadeIn 2s ease-out 2.5s forwards;
+            opacity: 0;
+        }
+
+        .btn {
+            padding: 17px 65px;
+            font-size: 1.25rem;
+            font-family: 'Georgia', serif;
+            border: none;
+            border-radius: 35px;
+            cursor: pointer;
+            transition: all 0.45s ease;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.06);
+            position: relative;
+            width: 260px;
+            max-width: 95%;
+        }
+
+        .yes-btn {
+            background: linear-gradient(135deg, #ffc1cc 0%, #ffd1d9 50%, #ffe0e6 100%);
+            color: #8b4854;
+            font-weight: 500;
+            border: 2px solid rgba(255, 182, 193, 0.35);
+        }
+
+        .yes-btn:hover {
+            transform: translateY(-6px) scale(1.04);
+            box-shadow: 0 12px 35px rgba(255, 182, 193, 0.35);
+            background: linear-gradient(135deg, #ffd1d9 0%, #ffe0e6 50%, #ffebef 100%);
+        }
+
+        .yes-btn::after {
+            content: '🤍';
+            position: absolute;
+            right: 22px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 1.4rem;
+            animation: gentleBounce 1.2s ease-in-out infinite;
+        }
+
+        @keyframes gentleBounce {
+
+            0%,
+            100% {
+                transform: translateY(-50%);
+            }
+
+            50% {
+                transform: translateY(-58%);
+            }
+        }
+
+        .no-btn {
+            background: linear-gradient(135deg, #e5e5e5 0%, #efefef 100%);
+            color: #b8b8b8;
+            border: 2px solid rgba(200, 200, 200, 0.25);
+            transition: all 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
+
+        /* Success screen */
+        .success-container {
+            display: none;
+            text-align: center;
+            padding: 80px 60px;
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(22px);
+            border-radius: 40px;
+            border: 1px solid rgba(255, 182, 193, 0.28);
+            box-shadow: 0 30px 80px rgba(255, 182, 193, 0.22);
+            max-width: 750px;
+            width: 100%;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .success-container.active {
+            display: block;
+            animation: fadeInUp 1.5s ease-out forwards;
+        }
+
+        .success-icon {
+            margin-bottom: 25px;
+            animation: fadeIn 1.2s ease-out 0.4s forwards;
+            opacity: 0;
+            cursor: pointer;
+        }
+
+        .success-icon img {
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            object-fit: cover;
+            object-position: center center;
+            border: 4px solid rgba(255, 182, 193, 0.4);
+            box-shadow: 0 8px 30px rgba(255, 182, 193, 0.3);
+            transition: transform 0.6s ease, box-shadow 0.6s ease;
+            animation: heartbeatPhoto 2.5s ease-in-out infinite;
+            display: block;
+        }
+
+        /* Slow heartbeat animation for photo */
+        @keyframes heartbeatPhoto {
+
+            0%,
+            100% {
+                transform: scale(1);
+            }
+
+            10%,
+            30% {
+                transform: scale(1.05);
+            }
+
+            20%,
+            40% {
+                transform: scale(1);
+            }
+        }
+
+        /* Zoom effect on hover */
+        .success-icon img:hover {
+            transform: scale(1.25);
+            box-shadow: 0 12px 45px rgba(255, 182, 193, 0.5);
+            border-color: rgba(255, 182, 193, 0.6);
+        }
+
+        .success-title {
+            font-size: 2.4rem;
+            color: #8b4854;
+            margin-bottom: 30px;
+            font-weight: 300;
+            line-height: 1.6;
+            animation: fadeIn 1.2s ease-out 0.7s forwards;
+            opacity: 0;
+        }
+
+        .success-message {
+            font-size: 1.45rem;
+            color: #a86a72;
+            line-height: 2;
+            margin-bottom: 25px;
+            animation: fadeIn 1.2s ease-out 1s forwards;
+            opacity: 0;
+        }
+
+        .success-promise {
+            font-size: 1.25rem;
+            color: #8b4854;
+            font-style: italic;
+            line-height: 1.9;
+            margin-top: 20px;
+            animation: fadeIn 1.2s ease-out 1.3s forwards;
+            opacity: 0;
+        }
+
+        .success-hearts {
+            margin-top: 40px;
+            font-size: 2.8rem;
+            animation: fadeIn 1.2s ease-out 1.6s forwards;
+            opacity: 0;
+        }
+
+        .success-hearts span {
+            display: inline-block;
+            margin: 0 12px;
+            animation: floatSoft 3.5s ease-in-out infinite;
+        }
+
+        .success-hearts span:nth-child(2) {
+            animation-delay: 0.5s;
+        }
+
+        .success-hearts span:nth-child(3) {
+            animation-delay: 1s;
+        }
+
+        .success-hearts span:nth-child(4) {
+            animation-delay: 1.5s;
+        }
+
+        @keyframes floatSoft {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-14px);
+            }
+        }
+
+        .love-quote {
+            margin-top: 35px;
+            padding: 25px;
+            background: rgba(255, 240, 245, 0.55);
+            border-radius: 18px;
+            border: 1px solid rgba(255, 182, 193, 0.22);
+            font-size: 1.05rem;
+            color: #9d6b74;
+            line-height: 1.8;
+            font-style: italic;
+            animation: fadeIn 1.2s ease-out 1.9s forwards;
+            opacity: 0;
+        }
+
+        /* Hide class */
+        .hide {
+            display: none !important;
+        }
+
+        /* Responsive */
+        @media (max-width: 700px) {
+            body {
+                padding: 30px 15px;
+            }
+
+            .proposal-container,
+            .success-container {
+                padding: 60px 40px;
+            }
+
+            .proposal-question {
+                font-size: 2.1rem;
+            }
+
+            .proposal-text {
+                font-size: 1.2rem;
+            }
+
+            .heart-icon {
+                font-size: 3rem;
+            }
+
+            .btn {
+                padding: 15px 50px;
+                font-size: 1.15rem;
+                width: 240px;
+            }
+
+            .success-icon {
+                margin-bottom: 25px;
+                animation: fadeIn 1.2s ease-out 0.4s forwards;
+                opacity: 0;
+                cursor: pointer;
+
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+
+
+            .success-icon img {
+                width: 150px;
+                height: 150px;
+            }
+
+            /* Keep zoom effect on mobile touch */
+            .success-icon img:active {
+                transform: scale(1.2);
+            }
+
+            .success-title {
+                font-size: 2rem;
+            }
+
+            .success-message {
+                font-size: 1.25rem;
+            }
+
+            .success-promise {
+                font-size: 1.1rem;
+            }
+
+            .success-hearts {
+                font-size: 2.3rem;
+            }
+
+            .corner-heart {
+                font-size: 26px;
+            }
+        }
+
+        @media (max-width: 480px) {
+
+            .proposal-container,
+            .success-container {
+                padding: 50px 30px;
+            }
+
+            .proposal-question {
+                font-size: 1.85rem;
+            }
+
+            .proposal-text {
+                font-size: 1.1rem;
+            }
+
+            .btn {
+                width: 220px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Music toggle -->
+    <div class="music-toggle" id="musicToggle">🔊</div>
+
+    <!-- Background music -->
+    <audio id="bgMusic" loop>
+        <source src="https://cdn.pixabay.com/audio/2022/03/10/audio_4c99b578d9.mp3" type="audio/mpeg">
+    </audio>
+
+    <!-- Falling petals -->
+    <div class="petals" id="petals"></div>
+
+    <!-- Floating hearts -->
+    <div class="hearts-bg" id="heartsBg"></div>
+
+    <!-- Main wrapper -->
+    <div class="main-wrapper">
+        <!-- Proposal screen -->
+        <div class="proposal-container" id="proposalScreen">
+            <div class="corner-heart tl">💗</div>
+            <div class="corner-heart tr">💕</div>
+            <div class="corner-heart bl">💖</div>
+            <div class="corner-heart br">💝</div>
+
+            <div class="propose-label">Propose Day</div>
+
+            <div class="proposal-text">
+                On this Propose Day…<br>
+                I just want to ask you something from my heart
+            </div>
+
+            <div class="proposal-question">
+                Will you be mine, forever?
+            </div>
+
+            <div class="heart-icon">🤍</div>
+
+            <div class="buttons" id="buttonsContainer">
+                <button class="btn yes-btn" id="yesBtn">YES 🤍</button>
+                <button class="btn no-btn" id="noBtn">NO</button>
+            </div>
+        </div>
+
+        <!-- Success screen -->
+        <div class="success-container" id="successScreen">
+            <div class="success-icon">
+                <!-- Replace 'your-photo.jpg' with your actual image file name -->
+                <!-- You can use: a local file, or a direct image URL -->
+                <img src="img2.jpeg" alt="Our Photo"
+                    onerror="this.src='https://via.placeholder.com/180/ffb6c1/8b4854?text=Your+Photo'">
+            </div>
+
+            <div class="success-title">
+                Thank you for choosing me 🤍
+            </div>
+
+            <div class="success-message">
+                You just turned my dreams into reality.<br>
+                This moment means everything to me.
+            </div>
+
+            <div class="success-promise">
+                I promise to love you, respect you, and stand beside you… always.<br>
+                Through every sunrise and sunset,<br>
+                Through every joy and every challenge,<br>
+                You and me, together, forever.
+            </div>
+
+            <div class="success-hearts">
+                <span>🧿</span>
+                <span>🤍</span>
+                <span>♾</span>
+                <span>💖</span>
+            </div>
+
+            <div class="love-quote">
+                "In your eyes, I found my home.<br>
+                In your heart, I found my love.<br>
+                In your soul, I found my forever."
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // DOM elements
+        const proposalScreen = document.getElementById('proposalScreen');
+        const successScreen = document.getElementById('successScreen');
+        const yesBtn = document.getElementById('yesBtn');
+        const noBtn = document.getElementById('noBtn');
+        const musicToggle = document.getElementById('musicToggle');
+        const bgMusic = document.getElementById('bgMusic');
+        const petalsContainer = document.getElementById('petals');
+        const heartsBg = document.getElementById('heartsBg');
+        const buttonsContainer = document.getElementById('buttonsContainer');
+
+        // Music control
+        let isMusicPlaying = false;
+
+        musicToggle.addEventListener('click', () => {
+            if (isMusicPlaying) {
+                bgMusic.pause();
+                musicToggle.textContent = '🔇';
+                isMusicPlaying = false;
+            } else {
+                bgMusic.play();
+                musicToggle.textContent = '🔊';
+                isMusicPlaying = true;
+            }
+        });
+
+        // Auto-play on first interaction
+        document.addEventListener('click', () => {
+            if (!isMusicPlaying) {
+                bgMusic.play().catch(() => { });
+                isMusicPlaying = true;
+            }
+        }, { once: true });
+
+        // Create falling petals - slow and gentle
+        function createPetal() {
+            const petal = document.createElement('div');
+            petal.className = 'petal';
+
+            const petals = ['🌸', '🌺', '🏵️', '🌷', '🌹'];
+            petal.textContent = petals[Math.floor(Math.random() * petals.length)];
+
+            petal.style.left = Math.random() * 100 + '%';
+            petal.style.animationDuration = (Math.random() * 8 + 14) + 's';
+            petal.style.animationDelay = Math.random() * 5 + 's';
+
+            petalsContainer.appendChild(petal);
+
+            setTimeout(() => petal.remove(), 25000);
+        }
+
+        // Create floating hearts - very gentle
+        function createFloatingHeart() {
+            const heart = document.createElement('div');
+            heart.className = 'heart-float';
+
+            const hearts = ['💕', '💖', '💗', '💝', '💞', '🤍'];
+            heart.textContent = hearts[Math.floor(Math.random() * hearts.length)];
+
+            heart.style.left = Math.random() * 100 + '%';
+            heart.style.animationDuration = (Math.random() * 8 + 12) + 's';
+            heart.style.animationDelay = Math.random() * 4 + 's';
+
+            heartsBg.appendChild(heart);
+
+            setTimeout(() => heart.remove(), 18000);
+        }
+
+        // Create petals slowly
+        setInterval(createPetal, 2500);
+
+        // Create hearts slowly
+        setInterval(createFloatingHeart, 3500);
+
+        // Initial petals and hearts
+        for (let i = 0; i < 8; i++) {
+            setTimeout(createPetal, i * 800);
+            setTimeout(createFloatingHeart, i * 1000);
+        }
+
+        // NO button escape - very gentle and smooth
+        let noAttempts = 0;
+
+        function moveNoButton() {
+            noAttempts++;
+
+            const container = buttonsContainer;
+
+            // Gentle positions
+            const positions = [
+                { left: '50%', top: '0px', transform: 'translateX(-50%)' },
+                { left: '50%', top: '90px', transform: 'translateX(-50%)' },
+                { left: '8%', top: '45px', transform: 'translateX(0)' },
+                { left: '68%', top: '45px', transform: 'translateX(0)' },
+                { left: '35%', top: '20px', transform: 'translateX(0)' },
+                { left: '55%', top: '65px', transform: 'translateX(0)' }
+            ];
+
+            const randomPos = positions[Math.floor(Math.random() * positions.length)];
+
+            noBtn.style.position = 'absolute';
+            noBtn.style.left = randomPos.left;
+            noBtn.style.top = randomPos.top;
+            noBtn.style.transform = randomPos.transform;
+
+            // Gentle shrinking after attempts
+            if (noAttempts > 4) {
+                const scale = Math.max(0.65, 1 - (noAttempts * 0.05));
+                noBtn.style.transform = `${randomPos.transform} scale(${scale})`;
+            }
+        }
+
+        // Desktop hover
+        noBtn.addEventListener('mouseenter', moveNoButton);
+
+        // Mobile touch
+        noBtn.addEventListener('touchstart', (e) => {
+            e.preventDefault();
+            moveNoButton();
+        });
+
+        // Prevent click
+        noBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            moveNoButton();
+        });
+
+        // YES button - show success with blur transition
+        yesBtn.addEventListener('click', () => {
+            // Add blur effect
+            proposalScreen.style.filter = 'blur(10px)';
+            proposalScreen.style.transition = 'filter 0.8s ease, opacity 0.8s ease';
+            proposalScreen.style.opacity = '0';
+
+            setTimeout(() => {
+                proposalScreen.classList.add('hide');
+                successScreen.classList.add('active');
+
+                // Scroll to top smoothly
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+
+                // Create abundant petals and hearts
+                for (let i = 0; i < 40; i++) {
+                    setTimeout(createPetal, i * 120);
+                }
+
+                for (let i = 0; i < 30; i++) {
+                    setTimeout(createFloatingHeart, i * 180);
+                }
+
+                // Increase floating hearts frequency
+                setInterval(() => {
+                    createFloatingHeart();
+                }, 2000);
+            }, 800);
+        });
+    </script>
+</body>
+
+</html>
